@@ -15,7 +15,7 @@ public class HerokuAppPageObject {
         this.driver = driver;
     }
 
-    public WebDriver login(String username, String password){
+    public WebDriver login(String username, String password) {
         driver.findElement(USERNAME_BY).sendKeys(username);
         driver.findElement(PASSWORD_BY).sendKeys(password);
         driver.findElement(LOGIN_BUTTON_BY).click();

@@ -1,9 +1,6 @@
 import org.junit.jupiter.api.*;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Scanner;
 
 public class FileReaderTest {
 
@@ -12,22 +9,22 @@ public class FileReaderTest {
     private FileReader fileReader;
 
     @BeforeAll
-    static void setupBeforeAll(){
+    static void setupBeforeAll() {
         FILE_PATH = "src/test/resources/file.txt";
     }
 
     @AfterAll
-    static void cleanupAfterAll(){
+    static void tearDownAfterAll() {
         FILE_PATH = null;
     }
 
     @BeforeEach
-    public void setupBeforeEach(){
+    public void setupBeforeEach() {
         fileReader = new FileReader();
     }
 
     @AfterEach
-    public void cleanupAfterEach(){
+    public void tearDownAfterEach() {
         fileReader = null;
     }
 
