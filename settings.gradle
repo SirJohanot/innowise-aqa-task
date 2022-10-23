@@ -1,3 +1,4 @@
 rootProject.name = 'innoWiseAQATask'
 include 'fileReader'
+include 'loginTesting'
 

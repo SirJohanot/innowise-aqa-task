@@ -12,22 +12,22 @@ public class FileReaderTest {
     private FileReader fileReader;
 
     @BeforeAll
-    static void setUpBeforeAll(){
-        FILE_PATH = "file.txt";
+    static void setupBeforeAll(){
+        FILE_PATH = "src/test/resources/file.txt";
     }
 
     @AfterAll
-    static void cleanUpAfterAll(){
+    static void cleanupAfterAll(){
         FILE_PATH = null;
     }
 
     @BeforeEach
-    public void setUpBeforeEach(){
+    public void setupBeforeEach(){
         fileReader = new FileReader();
     }
 
     @AfterEach
-    public void cleanUpAfterEach(){
+    public void cleanupAfterEach(){
         fileReader = null;
     }
 
