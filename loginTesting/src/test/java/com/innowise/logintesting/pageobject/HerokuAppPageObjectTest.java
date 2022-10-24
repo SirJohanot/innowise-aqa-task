@@ -18,7 +18,6 @@ public class HerokuAppPageObjectTest {
     @Step("Go to the HerokuApp Login Page")
     @BeforeEach
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://the-internet.herokuapp.com/login");
         pageObject = new HerokuAppPageObject(driver);
