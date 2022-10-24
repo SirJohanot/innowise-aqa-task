@@ -1,0 +1,32 @@
+#docker build --pull --rm -f ".\aqaTaskDockerFile.txt" -t ubuntu:innowiseaqatask "."
+
+FROM ubuntu:latest
+
+RUN apt update
+RUN apt install -y git
+RUN	apt install -y openjdk-17-jdk && \
+	export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+	
+RUN apt install -y wget \
+	unzip && \
+	wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+	apt install -y ./google-chrome-stable_current_amd64.deb && \
+	wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && \
+	unzip chromedriver_linux64.zip && \
+	mv chromedriver /usr/bin/chromedriver && \
+	chown root:root /usr/bin/chromedriver && \
+	chmod +x /usr/bin/chromedriver
+
+RUN mkdir /root/.ssh/
+
+COPY .ssh/id_ed25519 /root/.ssh/id_ed25519
+
+RUN chmod -R 600 /root/.ssh/id_ed25519 && \
+    ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
+	
+RUN mkdir GitHub && \
+	cd GitHub && \
+	git clone git@github.com:SirJohanot/innoWiseAQATask.git && \
+	cd innoWiseAQATask && \
+	git checkout develop && \
+	chmod +x gradlew
