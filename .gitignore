@@ -6,3 +6,6 @@ build
 
 # Ignore IDE settings
 .idea
+
+# Ignore Allure reports
+allure-results
