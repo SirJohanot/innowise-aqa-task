@@ -3,23 +3,30 @@ package com.innowise.userserialization.entity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class UserDto {
+
+    public static final String BIRTHDAY_FORMAT = "yyyy-MM-dd";
 
     private final Integer id;
     private final String firstName;
     private final String lastName;
     private final String email;
     private final String password;
-    private final String birthday;
+    private final LocalDate birthday;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public UserDto(@JsonProperty("id") Integer id, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, @JsonProperty("email") String email, @JsonProperty("password") String password, @JsonProperty("birthday") String birthday) {
+    public UserDto(@JsonProperty("id") Integer id, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, @JsonProperty("email") String email, @JsonProperty("password") String password, @JsonProperty("birthday") String birthday) throws ParseException {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.birthday = birthday;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(BIRTHDAY_FORMAT);
+        this.birthday = LocalDate.parse(birthday, formatter);
     }
 
     public Integer getId() {
@@ -42,8 +49,13 @@ public class UserDto {
         return password;
     }
 
-    public String getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
+    }
+
+    @JsonProperty("birthday")
+    public String getBirthdayLine() {
+        return birthday.toString();
     }
 
     @Override

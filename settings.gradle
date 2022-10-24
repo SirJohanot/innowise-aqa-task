@@ -2,4 +2,6 @@ rootProject.name = 'innoWiseAQATask'
 include 'fileReader'
 include 'loginTesting'
 include 'userSerialization'
+include 'regexTesting'
+include 'catFactsAutomation'
 

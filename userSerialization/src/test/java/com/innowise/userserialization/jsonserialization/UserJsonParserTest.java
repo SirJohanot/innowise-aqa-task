@@ -2,24 +2,29 @@ package com.innowise.userserialization.jsonserialization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.innowise.userserialization.entity.UserDto;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import java.text.ParseException;
 
 public class UserJsonParserTest {
 
-    private static final UserDto SAMPLE_USER = new UserDto(1, "Tom", "Smith", "tomsmith@mail.com", "12345", "01-01-1999");
-    private static final String SAMPLE_JSON = "{\"id\":1,\"firstName\":\"Tom\",\"lastName\":\"Smith\",\"email\":\"tomsmith@mail.com\",\"password\":\"12345\",\"birthday\":\"01-01-1999\"}";
+    private static UserDto SAMPLE_USER;
+    private static String SAMPLE_JSON;
     private UserJsonParser parser;
 
+    @BeforeAll
+    static void setupBeforeAll() throws ParseException {
+        SAMPLE_USER = new UserDto(1, "Tom", "Smith", "tomsmith@mail.com", "12345", "1999-09-17");
+        SAMPLE_JSON = "{\"id\":1,\"firstName\":\"Tom\",\"lastName\":\"Smith\",\"email\":\"tomsmith@mail.com\",\"password\":\"12345\",\"birthday\":\"1999-09-17\"}";
+    }
+
     @BeforeEach
-    public void setup() {
+    public void setupBeforeEach() {
         parser = new UserJsonParser();
     }
 
     @AfterEach
-    public void tearDown() {
+    public void tearDownAfterEach() {
         parser = null;
     }
 
