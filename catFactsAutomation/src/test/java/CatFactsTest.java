@@ -31,8 +31,8 @@ public class CatFactsTest {
                 .statusCode(200)
                 .assertThat()
                 .body("data", hasSize(lessThanOrEqualTo(10)))
-                .body("data.fact", hasItems(notNullValue()))
-                .body("data.length", hasItems(lessThanOrEqualTo(30)));
+                .body("data.fact", hasSize(greaterThan(0)))
+                .body("data.length", hasSize(greaterThan(0)));
     }
 
     @Test
@@ -52,10 +52,10 @@ public class CatFactsTest {
                 .statusCode(200)
                 .assertThat()
                 .body("data", hasSize(lessThanOrEqualTo(10)))
-                .body("data.breed", hasItems(notNullValue()))
-                .body("data.country", hasItems(notNullValue()))
-                .body("data.origin", hasItems(notNullValue()))
-                .body("data.coat", hasItems(notNullValue()))
-                .body("data.pattern", hasItems(notNullValue()));
+                .body("data.breed", hasSize(greaterThan(0)))
+                .body("data.country", hasSize(greaterThan(0)))
+                .body("data.origin", hasSize(greaterThan(0)))
+                .body("data.coat", hasSize(greaterThan(0)))
+                .body("data.pattern", hasSize(greaterThan(0)));
     }
 }
