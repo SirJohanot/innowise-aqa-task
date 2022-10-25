@@ -1,7 +1,7 @@
-rootProject.name = 'innoWiseAQATask'
-include 'fileReader'
-include 'loginTesting'
-include 'userSerialization'
-include 'regexTesting'
-include 'catFactsAutomation'
+rootProject.name = 'innowise-aqa-task'
+include 'file-reader'
+include 'login-testing'
+include 'user-serialization'
+include 'regex-testing'
+include 'cat-facts-automation'
 
