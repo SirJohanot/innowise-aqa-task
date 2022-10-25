@@ -1,4 +1,4 @@
-package com.innowise.regextesting.regex;
+package com.innowise.regextesting.extractor;
 
 public class QuotedTextExtractor extends StringRegexExtractor {
 

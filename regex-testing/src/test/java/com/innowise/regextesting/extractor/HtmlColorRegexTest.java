@@ -1,4 +1,4 @@
-package com.innowise.regextesting.regex;
+package com.innowise.regextesting.extractor;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

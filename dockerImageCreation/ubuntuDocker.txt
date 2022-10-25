@@ -3,13 +3,12 @@
 FROM ubuntu:latest
 
 RUN apt update
-RUN apt install -y git
-RUN	apt install -y openjdk-17-jdk && \
-	export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+RUN apt install -y git \
+	wget \
+	unzip \
+	openjdk-17-jre
 	
-RUN apt install -y wget \
-	unzip && \
-	wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+RUN	wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
 	apt install -y ./google-chrome-stable_current_amd64.deb && \
 	wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && \
 	unzip chromedriver_linux64.zip && \

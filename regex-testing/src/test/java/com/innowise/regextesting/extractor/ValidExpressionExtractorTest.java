@@ -1,4 +1,4 @@
-package com.innowise.regextesting.regex;
+package com.innowise.regextesting.extractor;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -9,33 +9,32 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class QuotedTextExtractorTest {
+public class ValidExpressionExtractorTest {
 
-    private static final String TEXT_ONE = "\"Lorem ipsum\"";
-    private static final List<String> EXPECTED_TEXT_ONE_MATCHES = List.of("Lorem ipsum");
+    private static final String TEXT_ONE = "(2+2)";
+    private static final List<String> EXPECTED_TEXT_ONE_MATCHES = List.of("2+2");
 
-    private static final String TEXT_TWO = "\"762574627846574625\"lorem";
-    private static final List<String> EXPECTED_TEXT_TWO_MATCHES = List.of("762574627846574625");
+    private static final String TEXT_TWO = "(1*8)+9";
+    private static final List<String> EXPECTED_TEXT_TWO_MATCHES = List.of("1*8");
 
-    private static final String INVALID_TEXT_SINGLE_QUOTATION = "\"lorem ipsum";
+    private static final String INVALID_TEXT_SINGLE_QUOTATION = "(lorem ipsum";
     private static final List<String> EXPECTED_INVALID_TEXT_SINGLE_QUOTATION_MATCHES = Collections.emptyList();
 
-    private static final String INVALID_TEXT_EMPTY = "\"\"";
+    private static final String INVALID_TEXT_EMPTY = "()";
     private static final List<String> EXPECTED_INVALID_TEXT_EMPTY_MATCHES = Collections.emptyList();
 
     private static final String SAMPLE_TEXT_BLOCK = """
-            "It all started on one line
-            and ended on another"
-            ""
-            another quotation"
+            (1+2*3(1+2))
+            (3+5))
+            ((1+2+3)+4)
             """;
-    private static final List<String> EXPECTED_TEXT_BLOCK_MATCHES = Arrays.asList("It all started on one line\nand ended on another", "\n", "\nanother quotation");
+    private static final List<String> EXPECTED_TEXT_BLOCK_MATCHES = Arrays.asList("1+2*3(1+2)", "(1+2+3)+4");
 
-    private QuotedTextExtractor extractor;
+    private ValidExpressionExtractor extractor;
 
     @BeforeEach
     public void setup() {
-        extractor = new QuotedTextExtractor();
+        extractor = new ValidExpressionExtractor();
     }
 
     @AfterEach
@@ -44,7 +43,7 @@ public class QuotedTextExtractorTest {
     }
 
     @Test
-    public void testExtractFromStringShouldExtractTextWhenTheStringOnlyHasTheQuotedText() {
+    public void testExtractFromStringShouldExtractExpressionsWhenTheStringOnlyHasTheValidExpression() {
         //given
         //when
         List<String> actualMatches = extractor.extractFromString(TEXT_ONE);
@@ -53,7 +52,7 @@ public class QuotedTextExtractorTest {
     }
 
     @Test
-    public void testExtractFromStringShouldExtractTextWhenTheStringHasInvalidQuotes() {
+    public void testExtractFromStringShouldExtractExpressionsWhenTheStringHasInvalidBrackets() {
         //given
         //when
         List<String> actualMatches = extractor.extractFromString(TEXT_TWO);
@@ -62,7 +61,7 @@ public class QuotedTextExtractorTest {
     }
 
     @Test
-    public void testExtractFromStringShouldNotExtractWhenTheStringOnlyContainsAnInvalidQuote() {
+    public void testExtractFromStringShouldNotExtractWhenTheStringOnlyContainsAnInvalidExpression() {
         //given
         //when
         List<String> actualMatches = extractor.extractFromString(INVALID_TEXT_SINGLE_QUOTATION);
@@ -71,7 +70,7 @@ public class QuotedTextExtractorTest {
     }
 
     @Test
-    public void testExtractFromStringShouldNotExtractWhenTheStringHasEmptyQuotations() {
+    public void testExtractFromStringShouldNotExtractWhenTheStringHasAnEmptyExpression() {
         //given
         //when
         List<String> actualMatches = extractor.extractFromString(INVALID_TEXT_EMPTY);
@@ -80,11 +79,12 @@ public class QuotedTextExtractorTest {
     }
 
     @Test
-    public void testExtractFromStringShouldExtractAllValidQuotedTextWhenTextContainsManySymbols() {
+    public void testExtractFromStringShouldExtractAllValidExpressionsWhenTextContainsManySymbols() {
         //given
         //when
         List<String> actualMatches = extractor.extractFromString(SAMPLE_TEXT_BLOCK);
         //then
         Assertions.assertEquals(EXPECTED_TEXT_BLOCK_MATCHES, actualMatches);
     }
+
 }
