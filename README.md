@@ -1,1 +1,1 @@
-# innoWiseAQATask
+# innowise-aqa-task
