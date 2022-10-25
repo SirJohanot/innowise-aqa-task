@@ -1,3 +1,6 @@
+package com.innowise.filereader.reader;
+
+import com.innowise.filereader.reader.FileReader;
 import org.junit.jupiter.api.*;
 
 import java.io.FileNotFoundException;
