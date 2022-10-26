@@ -1,4 +1,4 @@
-#docker build --pull --rm -f ".\aqaTaskDockerFile.txt" -t ubuntu:innowiseaqatask "."
+#docker build --pull --rm -f ".\ubuntuDocker.txt" -t ubuntu:innowiseaqatask "."
 
 FROM ubuntu:latest
 
@@ -6,7 +6,8 @@ RUN apt update
 RUN apt install -y git \
 	wget \
 	unzip \
-	openjdk-17-jre
+	openjdk-17-jre \
+	selenium
 	
 RUN	wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
 	apt install -y ./google-chrome-stable_current_amd64.deb && \

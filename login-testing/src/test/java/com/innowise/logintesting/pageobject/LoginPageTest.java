@@ -3,70 +3,73 @@ package com.innowise.logintesting.pageobject;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class HerokuAppPageObjectTest {
+public class LoginPageTest {
 
     private WebDriver driver;
-    private HerokuAppPageObject pageObject;
+    private LoginPageObject pageObject;
 
-    @Step("Go to the HerokuApp Login Page")
+    @Step("Launch the web browser and go to the HerokuApp login page")
     @BeforeEach
     public void setup() {
         driver = new ChromeDriver();
         driver.get("https://the-internet.herokuapp.com/login");
-        pageObject = new HerokuAppPageObject(driver);
+        pageObject = new LoginPageObject(driver);
     }
 
-    @Step("Leave HerokuApp")
     @AfterEach
     public void tearDown() {
         savePageScreenshot(driver);
-        pageObject = null;
-        driver.quit();
+        tearDownDriverAndPageObject();
     }
 
     @Test
-    @Description("Login should redirect to secure area when the user is valid")
+    @Story("User tries to log in with valid credentials")
+    @Description("Login should redirect to the secure area when the user is valid")
     public void testLoginShouldRedirectToSecureAreaWhenTheUserIsValid() {
         //given
         String username = "tomsmith";
         String password = "SuperSecretPassword!";
         String expectedPageName = "Secure Area";
         //when
-        String actualPageName = getPageNameAfterLogin(username, password);
+        SecureAreaPageObject afterLogin = pageObject.loginAs(username, password);
+        String actualPageName = afterLogin.getPageName();
         //then
         Assertions.assertEquals(expectedPageName, actualPageName);
     }
 
     @Test
-    @Description("Login should redirect to login page when the user is not valid")
+    @Story("User tries to log in with invalid credentials")
+    @Description("Login should redirect to the login page when the user is not valid")
     public void testLoginShouldRedirectToLoginPageWhenTheUserIsNotValid() {
         //given
         String username = "blahBlahBlahInvalid";
         String password = "NotSoSecretPassword!";
         String expectedPageName = "Login Page";
         //when
-        String actualPageName = getPageNameAfterLogin(username, password);
+        LoginPageObject afterLogin = pageObject.loginAsExpectingError(username, password);
+        String actualPageName = afterLogin.getPageName();
         //then
         Assertions.assertEquals(expectedPageName, actualPageName);
     }
 
-    @Step("Log in with username={username} and password={password}")
-    private String getPageNameAfterLogin(String username, String password) {
-        WebDriver driverAfterLogin = pageObject.login(username, password);
-        By pageNameBy = By.xpath("//h2");
-        WebElement pageNameElement = driverAfterLogin.findElement(pageNameBy);
-        return pageNameElement.getText();
+    @Attachment(value = "Page Screenshot", type = "image/png")
+    private byte[] savePageScreenshot(WebDriver driver) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
-    @Attachment(value = "Page Screenshot", type = "image/png")
-    public byte[] savePageScreenshot(WebDriver driver) {
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    @Step("Leave HerokuApp and quit the web browser")
+    private void tearDownDriverAndPageObject() {
+        pageObject = null;
+        driver.quit();
     }
 }
