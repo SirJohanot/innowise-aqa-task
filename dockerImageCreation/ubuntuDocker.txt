@@ -17,16 +17,4 @@ RUN	wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
 	chown root:root /usr/bin/chromedriver && \
 	chmod +x /usr/bin/chromedriver
 
-RUN mkdir /root/.ssh/
-
-COPY .ssh/id_ed25519 /root/.ssh/id_ed25519
-
-RUN chmod -R 600 /root/.ssh/id_ed25519 && \
-    ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
-	
-RUN mkdir GitHub && \
-	cd GitHub && \
-	git clone git@github.com:SirJohanot/innowise-aqa-task.git && \
-	cd innowise-aqa-task && \
-	git checkout develop && \
-	chmod +x gradlew
+RUN mkdir GitHub
