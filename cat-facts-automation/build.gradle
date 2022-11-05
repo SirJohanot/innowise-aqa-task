@@ -1,0 +1,12 @@
+plugins {
+    id 'com.innowise.innowiseaqatask.convention-plugin'
+    id "io.qameta.allure" version "2.11.1"
+}
+
+group 'com.innowise'
+version '0.0.1'
+
+dependencies {
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.2.0'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+}
